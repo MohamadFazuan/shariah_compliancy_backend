@@ -119,10 +119,14 @@ app.post('/multidocs', upload.array('file', 10), (req, res, next) => {
 
 app.get('/docs', (req, res, next) => {
     let docs = [];
-    docsModel.find({}).then((data) => {
-        data.forEach(element => {
-            docs.push(element)
-        });
+    docsModel.find({}).then(async (data) => {
+
+        for (var i = 0; i < data.length; i++) {
+
+            const updateId = await docsModel.updateOne({ id: data[i].id }, { id: i + 1 });
+            docs.push(data[i]);
+        }
+
 
         res.status(200).send(docs);
     })
@@ -236,6 +240,8 @@ app.post('/delete', (req, res, next) => {
         if (fs.existsSync(path.join(__dirname, '/output/output-' + data.filename))) {
             fs.unlinkSync(path.join(__dirname, '/output/output-' + data.filename));
         }
+
+        res.status(200).send("Deleted");
     });
 });
 
