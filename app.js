@@ -163,7 +163,7 @@ app.post('/statusUpdate', (req, res, next) => {
                     } else {
                         const buf = Buffer.from(result.file.data);
 
-                        axios(`http://4.240.82.150:8000/api?inp=${buf.toString()}`, {
+                        axios(`http://178.128.127.151:8000/api?inp=${buf.toString()}`, {
                             method: "GET",
                             headers: {
                                 "Accept": "application/json",
